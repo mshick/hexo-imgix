@@ -1,0 +1,10 @@
+{
+  "extends": "defaults/configurations/walmart/es6-node",
+  "rules": {
+    "strict": 0,
+    "dot-notation": 0
+  },
+  "globals": {
+    "hexo": true
+  }
+}

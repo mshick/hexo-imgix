@@ -9,6 +9,7 @@
  * {% imgix https://s3.amazonaws.com/example-bucket/example.jpg [param=value,param=value] [class1,class2,classN] [JSONImageAttributes] %}
  */
 
+const assert = require("assert");
 const url = require("url");
 const qs = require("qs");
 
@@ -61,7 +62,9 @@ const makeAttrs = function (attrs) {
   return attrArr.join(" ");
 };
 
-const imgix = function (imageUrl, params, classes, imgAttr) {
+const helper = function (imageUrl, params, classes, imgAttr) {
+
+  assert(imageUrl, "imageUrl is required");
 
   const settings = hexo.config.imgix || {};
 
@@ -79,8 +82,14 @@ const imgix = function (imageUrl, params, classes, imgAttr) {
 };
 
 const tag = function (args) {
-  return imgix(...args);
+
+  const imageUrl = args[0];
+  const params = args[1] || "";
+  const classes = args[2] ? args[2].split(",") : [];
+  const imgAttr = args[3] ? JSON.parse(args[3]) : {};
+
+  return imgix(imageUrl, params, classes, imgAttr);
 };
 
-hexo.extend.tag.register("imgix", imgix);
-hexo.extend.helper.register("imgix", imgix);
+hexo.extend.tag.register("imgix", tag);
+hexo.extend.helper.register("imgix", helper);

@@ -24,7 +24,10 @@ imgix:
     DEFAULT: w=600
     inline: w=800
     attachment: w=1000
-  src_set: [ 0.5, 0.75, 1.00 ]
+  srcset:
+    scale: [ 0.5, 0.75, 1.00 ]
+    min: 300
+    max: 2000
 ```
 
 > Descriptions

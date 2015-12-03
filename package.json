@@ -1,7 +1,7 @@
 {
   "name": "hexo-tag-imgix",
   "version": "1.0.0",
-  "description": "",
+  "description": "Support for imgix url substitution via a handy tag. Works in templates too.",
   "main": "index.js",
   "scripts": {
     "test": "eslint index.js"
@@ -9,7 +9,7 @@
   "engines": {
     "node": ">= 5.0.0"
   },
-  "author": "",
+  "author": "Michael Shick <m@shick.us>",
   "license": "ISC",
   "dependencies": {
     "qs": "^6.0.1"
@@ -18,5 +18,13 @@
     "eslint": "^1.10.3",
     "eslint-config-defaults": "^7.1.1",
     "eslint-plugin-filenames": "^0.2.0"
-  }
+  },
+  "keywords": [
+    "imgix",
+    "images",
+    "hexo",
+    "hexo-tag",
+    "hexo-plugin",
+    "static site"
+  ]
 }

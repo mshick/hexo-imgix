@@ -1,6 +1,6 @@
 {
-  "name": "hexo-tag-imgix",
-  "version": "1.2.0",
+  "name": "hexo-imgix",
+  "version": "1.0.0",
   "description": "Support for imgix url substitution via a handy tag. Works in templates too.",
   "main": "index.js",
   "scripts": {

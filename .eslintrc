@@ -1,6 +1,7 @@
 {
   "extends": "defaults/configurations/walmart/es6-node",
   "rules": {
+    "global-require": 0,
     "strict": 0,
     "dot-notation": 0
   },

@@ -17,25 +17,38 @@ imgix:
 ```yaml
 imgix:
   domain: example.imgix.net
-  replace:
+  match:
     - 'https://s3.amazonaws.com/example-bucket'
-    - 'assets/uploads'
+    - assets/uploads
   profiles:
-    DEFAULT: w=600
-    inline: w=800
-    attachment: w=1000
+    DEFAULT:
+      w: 600
+      blend: color
+    inline:
+      w: 800
+    attachment:
+      w: 1000
   srcset:
     scale: [ 0.5, 0.75, 1.00 ]
     min: 300
     max: 2000
+  filter:
+    params:
+      profile: inline
+  tag: true
+  helper: true
 ```
 
 > Descriptions
 
 * domain: Your imgix domain, is the substitution string for replacement patterns
-* replace: Array of replacement patterns, applied to urls / paths provided to the tag
+* match: Array of patterns to match for domain substitution, applied to urls / paths provided to the tag
 * profiles: Array of query string parameters that adhere to the imgix API
-* src_set: If set, will create a scaled srcset value on your output img tag
+* srcset: If set, will create a scaled srcset value on your output img tag
+* filter: Enables the post filter, which can upgrade standard markdown images during rendering. Also makes use of the `=000x000` size proposal for specifying an images source dimensions.
+* tag: Enables the tag. You can use this directly in markdown to manipulate images.
+* helper: Enables the template helper, which allows similar functionality in templates.
+
 
 # Syntax
 
@@ -65,6 +78,8 @@ parameters in the space before the image url.
 ```ejs
 <%- imgix(photo.src, { profile: "inline", blend: "color" }, { classes: ["class1", "class2"], params: { "height": 500, "width": 1000 } }) %>
 ```
+
+#
 
 # Resources
 

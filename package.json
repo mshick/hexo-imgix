@@ -1,6 +1,6 @@
 {
   "name": "hexo-imgix",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Tools supporting imgix in hexo. Included are a filter, tag and helper",
   "main": "index.js",
   "scripts": {

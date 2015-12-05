@@ -1,6 +1,7 @@
 # hexo-tag-imgix
 Support for imgix url substitution via a handy tag. Works in templates too.
 
+
 # _config.yml
 
 > Minimal options
@@ -8,8 +9,8 @@ Support for imgix url substitution via a handy tag. Works in templates too.
 ```yaml
 imgix:
   domain: example.imgix.net
-  replace:
-    - 'https://s3.amazonaws.com/example-bucket'
+  match:
+    - url: 'https://s3.amazonaws.com/example-bucket'
 ```
 
 > All options
@@ -18,23 +19,23 @@ imgix:
 imgix:
   domain: example.imgix.net
   match:
-    - 'https://s3.amazonaws.com/example-bucket'
-    - assets/uploads
+    - url: 'https://s3.amazonaws.com/example-bucket'
+      profile: inline
+    - url: '/assets/uploads'
   profiles:
     DEFAULT:
-      w: 600
-      blend: color
+      srcset:
+        scale: [ 0.5, 0.75, 1.00 ]
+        sizes: 100vw
+      params:
+        w: 600
     inline:
-      w: 800
-    attachment:
-      w: 1000
-  srcset:
-    scale: [ 0.5, 0.75, 1.00 ]
-    min: 300
-    max: 2000
-  filter:
-    params:
-      profile: inline
+      srcset:
+        scale: [ 0.5, 0.75, 1.00 ]
+        sizes: (min-width: 36em) 33.3vw, 100vw
+      params:
+        w: 800
+  filter: true
   tag: true
   helper: true
 ```
@@ -42,10 +43,11 @@ imgix:
 > Descriptions
 
 * domain: Your imgix domain, is the substitution string for replacement patterns
-* match: Array of patterns to match for domain substitution, applied to urls / paths provided to the tag
-* profiles: Array of query string parameters that adhere to the imgix API
-* srcset: If set, will create a scaled srcset value on your output img tag
-* filter: Enables the post filter, which can upgrade standard markdown images during rendering. Also makes use of the `=000x000` size proposal for specifying an images source dimensions.
+* match: Array of match objects to test for domain substitution, applied to urls / paths provided to the tag. Providing a profile will apply that profile when the match is made.
+* profiles: Array of profile objects, valid properties are:
+  * srcset: If set, will create a scaled srcset value on your output img tag
+  * params: imgix API parameters to apply for this profile
+* filter: Enables the post filter, which can upgrade image markup after rendering. Also makes use of size parameters for constructing smarter srcsets.
 * tag: Enables the tag. You can use this directly in markdown to manipulate images.
 * helper: Enables the template helper, which allows similar functionality in templates.
 
@@ -58,6 +60,7 @@ parameters in the space before the image url.
 ```md
 {% imgix [class names AND/OR params:values] /path/to/image [width] [height] ['title text' ['alt text']] %}
 ```
+
 
 # Usage
 
@@ -79,7 +82,11 @@ parameters in the space before the image url.
 <%- imgix(photo.src, { profile: "inline", blend: "color" }, { classes: ["class1", "class2"], params: { "height": 500, "width": 1000 } }) %>
 ```
 
-#
+
+# Suggestions
+
+When using the filter processor I like to use `hexo-markdown-it`, along with the `markdown-it-imsize` plugin / module to specify image dimensions in my markdown, and generate source-size-aware imgix tags.
+
 
 # Resources
 

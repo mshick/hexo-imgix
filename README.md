@@ -9,21 +9,21 @@ Support for imgix url substitution via a handy tag. Works in templates too.
 ```yaml
 imgix:
   domain: example.imgix.net
-  match:
-    - url: 'https://s3.amazonaws.com/example-bucket'
+  match: 'https://s3.amazonaws.com/example-bucket'
 ```
 
 > All options
 
 ```yaml
 imgix:
-  domain: example.imgix.net
   match:
     - url: 'https://s3.amazonaws.com/example-bucket'
       profile: inline
     - url: '/assets/uploads'
   profiles:
     DEFAULT:
+      secure_url: false
+      domain: example.imgix.net
       srcset:
         scale: [ 0.5, 0.75, 1.00 ]
         sizes: 100vw
@@ -42,9 +42,10 @@ imgix:
 
 > Descriptions
 
-* domain: Your imgix domain, is the substitution string for replacement patterns
 * match: Array of match objects to test for domain substitution, applied to urls / paths provided to the tag. Providing a profile will apply that profile when the match is made.
 * profiles: Array of profile objects, valid properties are:
+  * secure_url: Whether this domain supports SSL
+  * domain: Your imgix domain, is the substitution string for matching urls
   * srcset: If set, will create a scaled srcset value on your output img tag
   * params: imgix API parameters to apply for this profile
 * filter: Enables the post filter, which can upgrade image markup after rendering. Also makes use of size parameters for constructing smarter srcsets.

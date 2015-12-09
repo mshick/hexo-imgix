@@ -16,6 +16,6 @@ if (settings.helper) {
 }
 
 if (config && settings.filter) {
-  hexo.extend.filter.register("after_post_render", require("./lib/filter")(hexo));
+  hexo.extend.filter.register("after_render", require("./lib/filter")(hexo));
 }
 

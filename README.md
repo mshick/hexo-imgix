@@ -17,7 +17,8 @@ imgix:
 
 ```yaml
 imgix:
-  - name: example
+  - 
+    name: example
     match: https://s3.amazonaws.com/example-bucket
     domain: example.imgix.net
     secure_url: false
@@ -31,8 +32,8 @@ imgix:
     filter: true
     tag: true
     helper: true
-
-  - name: uploads
+  - 
+    name: uploads
     match: /assets/uploads
     domain: uploads.imgix.net
     secure_url: true

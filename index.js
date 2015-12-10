@@ -4,18 +4,33 @@ const defaults = {
   helper: true
 };
 
-const config = hexo.config.imgix;
-const settings = Object.assign(defaults, config);
+const findProfiles = function (pluginName, profiles) {
+  return profiles
+    .filter((x) => Object.keys(x).length)
+    .map((x) => Object.assign({}, defaults, x))
+    .filter((x) => x[pluginName]);
+};
 
-if (settings.tag) {
-  hexo.extend.tag.register("imgix", require("./lib/tag")(hexo));
+const config = hexo.config.imgix || {};
+
+const allProfiles = Array.isArray(config) ? config : [config];
+
+const tagProfiles = findProfiles("tag", allProfiles);
+
+if (tagProfiles.length) {
+  hexo.extend.tag.register("imgix", require("./lib/tag")(tagProfiles, hexo));
 }
 
-if (settings.helper) {
-  hexo.extend.helper.register("imgix", require("./lib/helper")(hexo));
+const helperProfiles = findProfiles("helper", allProfiles);
+
+if (helperProfiles.length) {
+  hexo.extend.helper.register("imgix", require("./lib/helper")(helperProfiles, hexo));
+  hexo.extend.helper.register("imgix_url", require("./lib/helper-url")(helperProfiles, hexo));
 }
 
-if (config && settings.filter) {
-  hexo.extend.filter.register("after_render", require("./lib/filter")(hexo));
+const filterProfiles = findProfiles("filter", allProfiles);
+
+if (filterProfiles.length) {
+  hexo.extend.filter.register("after_post_render", require("./lib/filter")(filterProfiles, hexo));
 }
 

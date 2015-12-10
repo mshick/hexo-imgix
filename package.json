@@ -1,6 +1,6 @@
 {
   "name": "hexo-imgix",
-  "version": "1.6.0",
+  "version": "2.0.0",
   "description": "Tools supporting imgix in hexo. Included are a filter, tag and helper",
   "main": "index.js",
   "scripts": {
@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "cheerio": "^0.19.0",
+    "clone": "^1.0.2",
     "hexo-util": "^0.2.1",
     "qs": "^6.0.1"
   },
